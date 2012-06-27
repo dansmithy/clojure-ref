@@ -1,0 +1,14 @@
+.checkstyle
+.classpath
+.project
+.settings/
+META-INF/
+target/
+*.orig
+*log.zip
+*.log
+*~
+*lein*
+*lib*
+*.iml
+.idea/
