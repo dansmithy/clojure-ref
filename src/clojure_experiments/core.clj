@@ -1,7 +1,5 @@
-(ns clojure-experiments.core)
 
-(def world { :height 3 :width 5 :tokens [[2 0] [4 0]] 
-            :blocks [[2 1] [3 0]] })
+(ns clojure-experiments.core)
 
 (defn turn-left [[x y]]
 	(if (= x 0) [(* -1 y) x] [y x]))
@@ -36,10 +34,23 @@
              (pickup-tokens world))
          robot)))
 
+(defn run [ robot world program ]
+  (if-let [task (first program)]
+     (run
+       (if (coll? task)
+	     (run robot world task)
+         (task robot world))
+         world
+       (rest program))
+     robot))
+
+
+
+(def fn1 [forward forward])
+
 (def program [ 
               forward 
-              forward 
-              forward 
+              fn1
               left 
               forward 
               forward
@@ -59,13 +70,12 @@
               forward])
 
 
-(defn run [ robot world program ]
-  (if-let [task (first program)]
-     (run (task robot world) world (rest program))
-     robot))
-
 (def robot { :position [0 2] :direction [0 -1]
              :tokens #{} })
+
+(def world { :height 3 :width 5 :tokens [[2 0] [4 0]] 
+            :blocks [[2 1] [3 0]] })
+
 
 (def a (run robot world program))
 
@@ -74,3 +84,6 @@ a
    (if (= 2 toks) 
      "You did it!" 
      (str "Not yet, you got " toks " tokens"))))
+
+
+
