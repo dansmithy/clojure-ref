@@ -1,5 +1,4 @@
-
-(ns clojure-experiments.core)
+(ns ref.playground.robots)
 
 (defn turn-left [[x y]]
 	(if (= x 0) [(* -1 y) x] [y x]))
@@ -69,21 +68,15 @@
               forward
               forward])
 
-
 (def robot { :position [0 2] :direction [0 -1]
              :tokens #{} })
 
 (def world { :height 3 :width 5 :tokens [[2 0] [4 0]] 
             :blocks [[2 1] [3 0]] })
 
-
 (def a (run robot world program))
 
-a
 (def message (let [toks (count (:tokens a))]
    (if (= 2 toks) 
      "You did it!" 
      (str "Not yet, you got " toks " tokens"))))
-
-
-
